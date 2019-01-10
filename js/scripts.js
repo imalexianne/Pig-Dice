@@ -68,3 +68,23 @@ Player.prototype.hold = function () {
     console.log('the turn total is: ' + this.turnTotal);
     return this.overallScore;
 };
+//Function to reset the form input fields, re-enable the buttons, remove the opacity from the gaming area and reset the scores to 0.
+function resetFields() {
+    $("input#player1Name").val("");
+    $("input#player2Name").val("");
+    $('.player1Area').children().prop('disabled', false);
+    $('.player2Area').children().prop('disabled', false);
+    $('.player1Area').removeClass('disableGamingArea');
+    $('.player2Area').removeClass('disableGamingArea');
+    var thePlayers = [player1, player2];
+    thePlayers.forEach(function (player) {
+        player.diceRoll = 0;
+        player.turnTotal = 0;
+        player.overallScore = 0;
+    })
+    var outputs = [$('.diceRoll1'), $('.turnScore1'), $('.overallScore1'), $('.diceRoll2'), $('.turnScore2'), $('.overallScore2')];
+    outputs.forEach(function (output) {
+        output.text(0);
+    })
+
+};
