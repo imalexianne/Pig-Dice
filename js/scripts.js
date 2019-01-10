@@ -53,3 +53,18 @@ Player.prototype.roll = function () {
     };
     return this.diceRoll;
 };
+//Function on what is to happen when a player holds the game.
+Player.prototype.hold = function () {
+    activeUser();
+    this.overallScore += this.turnTotal;
+    if (this.overallScore >= 100) {
+        alert("Game Over. You win!!!!");
+        resetFields();
+        alert('To play with a new partner click New Game.')
+
+    } else {
+        return false;
+    }
+    console.log('the turn total is: ' + this.turnTotal);
+    return this.overallScore;
+};
