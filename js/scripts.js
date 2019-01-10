@@ -88,3 +88,80 @@ function resetFields() {
     })
 
 };
+//Front End Logic
+$(document).ready(function () {
+    $("#rulesHeader").click(function () { //Makes the 'Rules' title clickeable and the rules themselves hideable.
+        $("#rulesDefinitions").toggle();
+    });//Actions when player enters name
+    $("#playerNames").submit(function (event) {
+        event.preventDefault();
+        $("#rulesDefinitions").hide();
+        $("form").hide();
+        $(".newGame").show();
+        $(".newGame").click(function () { //Makes the 'New Game' title clickeable and the form reappear.
+            $("form").show();
+            $('#gamingArea').hide();
+            $(".newGame").hide();
+            resetFields();
+        });
+        $('#gamingArea').show();
+        //Store the players names in variables.
+        var gamer1 = $("#player1Name").val();
+        var gamer2 = $("#player2Name").val();
+        //Put the names into an object using the constructor Players.
+        player1 = new Player(gamer1);
+        player2 = new Player(gamer2);
+        //Output the names into each appropriate section
+        $(".player1NameOutput").text(player1.name);
+        $(".player2NameOutput").text(player2.name);
+        resetFields(); //Clear the form input fields
+    });
+    //Display dice roll number and turn total when the roll button is clicked
+    $('.roll1').click(function (event) { //roll button for player1
+        event.preventDefault();
+        //Activate Gaming Area
+        player1.active = true;
+        player2.active = false;
+        player1.roll(); //call the function to generate random numbers
+        $('.diceRoll1').text(player1.diceRoll); //display the rolled dice number
+        $('.turnScore1').text(player1.turnTotal); //display the turn score (temporary score)
+    });
+    $('.roll2').click(function (event) { //roll button for player2
+        event.preventDefault();
+        //Activate Gaming Area
+        player2.active = true;
+        player1.active = false;
+        player2.roll(); //call the function to generate random numbers
+        $('.diceRoll2').text(player2.diceRoll); //display the rolled dice number
+        $('.turnScore2').text(player2.turnTotal); //display the turn score (temporary score)
+    });
+
+    //Display overall score when the hold button is clicked
+    $('.hold1').click(function (event) { //hold button for player1
+        event.preventDefault();
+        //Deactivate Gaming Area
+        player1.active = false;
+        player2.active = true;
+        player1.hold(); //call the function to add the turn score to the overall score
+        $('.overallScore1').text(player1.overallScore); //display the overall score
+        //Clear dice roll and turn score
+        player1.diceRoll = 0;
+        player1.turnTotal = 0;
+        $('.diceRoll1').text(player1.diceRoll);
+        $('.turnScore1').text(player1.turnTotal);
+    });
+    $('.hold2').click(function (event) { //hold button for player2
+        event.preventDefault();
+        //Deactivate Gaming Area
+        player2.active = false;
+        player1.active = true;
+        player2.hold(); //call the function to add the turn score to the overall score
+        $('.overallScore2').text(player2.overallScore); //display the overall score
+        //Clear turn score and total score
+        player2.diceRoll = 0;
+        player2.turnTotal = 0;
+        $('.diceRoll2').text(player2.diceRoll);
+        $('.turnScore2').text(player2.turnTotal);
+    });
+
+});
