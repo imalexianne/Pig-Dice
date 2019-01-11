@@ -1,5 +1,6 @@
 //Global Variables
 var player1, player2;
+//Back-End Logic
 //Constructor function for a player
 function Player(name, turnTotal, diceRoll, overallScore, active) {
     this.name = name;
@@ -92,7 +93,8 @@ function resetFields() {
 $(document).ready(function () {
     $("#rulesHeader").click(function () { //Makes the 'Rules' title clickeable and the rules themselves hideable.
         $("#rulesDefinitions").toggle();
-    });//Actions when player enters name
+    });
+    //Actions when player enters name
     $("#playerNames").submit(function (event) {
         event.preventDefault();
         $("#rulesDefinitions").hide();
